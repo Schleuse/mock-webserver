@@ -14,26 +14,56 @@ matrix:
         - 7.2
         - nightly
         - hhvm
-    - name: "Windows Test"
+
+    - name: "Windows PHP 7.2"
       language: sh
       os: windows
       before_script:
         # Use chocolatey to install certain php version
-        # Skipp --version to install latest stable release
-        - choco install php --version 7.2.15 --package-parameters='"/InstallDir:C:\php"'
+        - choco install php --version 7.2 --package-parameters='"/InstallDir:C:\php"'
         # Export windows path into unix path
         - export PATH=/c/php:$PATH
         - sed -i 's/;extension=openssl/extension=openssl/g' /c/php/php.ini
         - sed -i 's/;extension=sockets/extension=sockets/g' /c/php/php.ini
         - sed -i 's/;extension=json/extension=json/g' /c/php/php.ini
         - sed -i 's/;extension=curl/extension=curl/g' /c/php/php.ini
-        #
-        # You might want to enable other extensions as needed ...
-        #
         # Fetch composer
         - wget http://getcomposer.org/composer.phar
         # Install dependencies
         - php composer.phar install
+    - name: "Windows PHP 7.3"
+      language: sh
+      os: windows
+      before_script:
+        # Use chocolatey to install certain php version
+        - choco install php --version 7.3 --package-parameters='"/InstallDir:C:\php"'
+        # Export windows path into unix path
+        - export PATH=/c/php:$PATH
+        - sed -i 's/;extension=openssl/extension=openssl/g' /c/php/php.ini
+        - sed -i 's/;extension=sockets/extension=sockets/g' /c/php/php.ini
+        - sed -i 's/;extension=json/extension=json/g' /c/php/php.ini
+        - sed -i 's/;extension=curl/extension=curl/g' /c/php/php.ini
+        # Fetch composer
+        - wget http://getcomposer.org/composer.phar
+        # Install dependencies
+        - php composer.phar install
+    - name: "Windows PHP 7.4"
+      language: sh
+      os: windows
+      before_script:
+        # Use chocolatey to install certain php version
+        - choco install php --version 7.3 --package-parameters='"/InstallDir:C:\php"'
+        # Export windows path into unix path
+        - export PATH=/c/php:$PATH
+        - sed -i 's/;extension=openssl/extension=openssl/g' /c/php/php.ini
+        - sed -i 's/;extension=sockets/extension=sockets/g' /c/php/php.ini
+        - sed -i 's/;extension=json/extension=json/g' /c/php/php.ini
+        - sed -i 's/;extension=curl/extension=curl/g' /c/php/php.ini
+        # Fetch composer
+        - wget http://getcomposer.org/composer.phar
+        # Install dependencies
+        - php composer.phar install
+
   allow_failures:
     - php: nightly
     - php: hhvm
