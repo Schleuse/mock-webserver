@@ -1,6 +1,21 @@
 language: php
 sudo: false
 
+_prepare_windows: &prepare_windows
+  before_script:
+    - choco install php --version $PHP_VERSION --package-parameters='"/InstallDir:C:\php"'
+    # Export windows path into unix path
+    - export PATH=/c/php:$PATH
+    - sed -i 's/;extension=openssl/extension=openssl/g' /c/php/php.ini
+    - sed -i 's/;extension=sockets/extension=sockets/g' /c/php/php.ini
+    - sed -i 's/;extension=json/extension=json/g' /c/php/php.ini
+    - sed -i 's/;extension=curl/extension=curl/g' /c/php/php.ini
+    # Fetch composer
+    - wget http://getcomposer.org/composer.phar
+    # Install dependencies
+    - php composer.phar install
+
+
 matrix:
   include:
     - language: php
@@ -18,52 +33,21 @@ matrix:
     - name: "Windows PHP 7.2"
       language: sh
       os: windows
-      before_script:
-        # Use chocolatey to install certain php version
-        - choco install php --version ^7.2 --package-parameters='"/InstallDir:C:\php"'
-        # Export windows path into unix path
-        - export PATH=/c/php:$PATH
-        - sed -i 's/;extension=openssl/extension=openssl/g' /c/php/php.ini
-        - sed -i 's/;extension=sockets/extension=sockets/g' /c/php/php.ini
-        - sed -i 's/;extension=json/extension=json/g' /c/php/php.ini
-        - sed -i 's/;extension=curl/extension=curl/g' /c/php/php.ini
-        # Fetch composer
-        - wget http://getcomposer.org/composer.phar
-        # Install dependencies
-        - php composer.phar install
+      env:
+        - PHP_VERSION=7.2.30
+      <<: *prepare_windows
     - name: "Windows PHP 7.3"
       language: sh
       os: windows
-      before_script:
-        # Use chocolatey to install certain php version
-        - choco install php --version 7.3.* --package-parameters='"/InstallDir:C:\php"'
-        # Export windows path into unix path
-        - export PATH=/c/php:$PATH
-        - sed -i 's/;extension=openssl/extension=openssl/g' /c/php/php.ini
-        - sed -i 's/;extension=sockets/extension=sockets/g' /c/php/php.ini
-        - sed -i 's/;extension=json/extension=json/g' /c/php/php.ini
-        - sed -i 's/;extension=curl/extension=curl/g' /c/php/php.ini
-        # Fetch composer
-        - wget http://getcomposer.org/composer.phar
-        # Install dependencies
-        - php composer.phar install
+      env:
+        - PHP_VERSION=7.3.17
+      <<: *prepare_windows
     - name: "Windows PHP 7.4"
       language: sh
       os: windows
-      before_script:
-        # Use chocolatey to install certain php version
-        - choco install php --version 7.3 --package-parameters='"/InstallDir:C:\php"'
-        # Export windows path into unix path
-        - export PATH=/c/php:$PATH
-        - sed -i 's/;extension=openssl/extension=openssl/g' /c/php/php.ini
-        - sed -i 's/;extension=sockets/extension=sockets/g' /c/php/php.ini
-        - sed -i 's/;extension=json/extension=json/g' /c/php/php.ini
-        - sed -i 's/;extension=curl/extension=curl/g' /c/php/php.ini
-        # Fetch composer
-        - wget http://getcomposer.org/composer.phar
-        # Install dependencies
-        - php composer.phar install
-
+      env:
+        - PHP_VERSION=7.4.5
+      <<: *prepare_windows
   allow_failures:
     - php: nightly
     - php: hhvm
