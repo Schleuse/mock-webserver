@@ -23,6 +23,7 @@ matrix:
         - choco install php --version 7.2.15 --package-parameters='"/InstallDir:C:\php"'
         # Export windows path into unix path
         - export PATH=/c/php:$PATH
+        - sed -i 's/;extension=openssl/extension=openssl/g' /c/php/php.ini
         - sed -i 's/;extension=sockets/extension=sockets/g' /c/php/php.ini
         - sed -i 's/;extension=json/extension=json/g' /c/php/php.ini
         - sed -i 's/;extension=curl/extension=curl/g' /c/php/php.ini
