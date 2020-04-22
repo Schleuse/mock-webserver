@@ -3,31 +3,31 @@ _windows_test: &windows_test
   os: windows
   before_install:
     - choco install php --version $PHP_INSTALL_VERSION --package-parameters='"/InstallDir:C:\php"'
-    # Export windows path into unix path
-    - export PATH=/c/php:$PATH
+    - refreshenv
     # Enable required extensions
     - sed -i 's/;extension=openssl/extension=openssl/g' /c/php/php.ini
     - sed -i 's/;extension=sockets/extension=sockets/g' /c/php/php.ini
     - sed -i 's/;extension=json/extension=json/g' /c/php/php.ini
     - sed -i 's/;extension=curl/extension=curl/g' /c/php/php.ini
+    - php --version
     # Fetch composer
     - wget http://getcomposer.org/composer.phar
     # Install dependencies
     - php composer.phar install
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+  - 7.2
+  - 7.3
+  - nightly
 
 matrix:
   include:
     - language: php
       dist: trusty
-      php:
-        - 5.4
-        - 5.5
-        - 5.6
-        - 7.0
-        - 7.1
-        - 7.2
-        - 7.3
-        - nightly
     - name: "Windows PHP 5.4"
       env: PHP_INSTALL_VERSION=5.4.45
       <<: *windows_test
