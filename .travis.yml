@@ -15,7 +15,7 @@ _windows_test: &windows_test
     # Install dependencies
     - php composer.phar install
 
-jobs:
+matrix:
   include:
     - name: "Windows PHP 7.0"
       env: PHP_INSTALL_VERSION=7.0
@@ -32,8 +32,6 @@ jobs:
     - name: "Windows PHP 7.4"
       env: PHP_INSTALL_VERSION=7.4
       <<: *windows_test
-
-matrix:
   allow_failures:
     - php: nightly
 
