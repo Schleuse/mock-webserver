@@ -3,8 +3,6 @@ _windows_test: &windows_test
   os: windows
   before_install:
     - choco install php --version $PHP_INSTALL_VERSION --package-parameters='"/InstallDir:C:\php"'
-    # Export windows path into unix path
-    - export PATH=/c/php:$PATH
     # Enable required extensions
     - sed -i 's/;extension=openssl/extension=openssl/g' /c/php/php.ini
     - sed -i 's/;extension=sockets/extension=sockets/g' /c/php/php.ini
@@ -17,20 +15,40 @@ _windows_test: &windows_test
 
 matrix:
   include:
+    - language: php
+      dist: trusty
+      php:
+        - 5.4
+        - 5.5
+        - 5.6
+        - 7.0
+        - 7.1
+        - 7.2
+        - 7.3
+        - nightly
+    - name: "Windows PHP 5.4"
+      env: PHP_INSTALL_VERSION=5.4.45
+      <<: *windows_test
+    - name: "Windows PHP 5.5"
+      env: PHP_INSTALL_VERSION=5.5.38
+      <<: *windows_test
+    - name: "Windows PHP 5.6"
+      env: PHP_INSTALL_VERSION=5.6.40
+      <<: *windows_test
     - name: "Windows PHP 7.0"
-      env: PHP_INSTALL_VERSION=7.0
+      env: PHP_INSTALL_VERSION=7.0.33
       <<: *windows_test
     - name: "Windows PHP 7.1"
-      env: PHP_INSTALL_VERSION=7.1
+      env: PHP_INSTALL_VERSION=7.1.33
       <<: *windows_test
     - name: "Windows PHP 7.2"
-      env: PHP_INSTALL_VERSION=7.2
+      env: PHP_INSTALL_VERSION=7.2.30
       <<: *windows_test
     - name: "Windows PHP 7.3"
-      env: PHP_INSTALL_VERSION=7.3
+      env: PHP_INSTALL_VERSION=7.3.17
       <<: *windows_test
     - name: "Windows PHP 7.4"
-      env: PHP_INSTALL_VERSION=7.4
+      env: PHP_INSTALL_VERSION=7.4.5
       <<: *windows_test
   allow_failures:
     - php: nightly
