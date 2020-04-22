@@ -15,26 +15,8 @@ _windows_test: &windows_test
     # Install dependencies
     - php composer.phar install
 
-dist: trusty
-
 jobs:
   include:
-    - language: php
-      php: 5.4
-    - language: php
-      php: 5.5
-    - language: php
-      php: 5.6
-    - language: php
-      php: 7.0
-    - language: php
-      php: 7.1
-    - language: php
-      php: 7.2
-    - language: php
-      php: 7.3
-    - language: php
-      php: nightly
     - name: "Windows PHP 7.0"
       env: PHP_INSTALL_VERSION=7.0
       <<: *windows_test
