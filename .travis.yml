@@ -3,14 +3,15 @@ _windows_test: &windows_test
   os: windows
   before_install:
     - choco install php --version $PHP_INSTALL_VERSION --package-parameters='"/InstallDir:C:\php"'
-    - export PATH=/c/php:$PATH
     # Enable required extensions
     - sed -i 's/;extension=openssl/extension=openssl/g' /c/php/php.ini
     - sed -i 's/;extension=sockets/extension=sockets/g' /c/php/php.ini
     - sed -i 's/;extension=json/extension=json/g' /c/php/php.ini
     - sed -i 's/;extension=curl/extension=curl/g' /c/php/php.ini
-    - wget http://getcomposer.org/composer.phar
-  install: php composer.phar install
+    - wget https://getcomposer.org/composer.phar
+  install:
+    - export PATH=/c/php:$PATH
+    - php composer.phar install
 
 matrix:
   include:
