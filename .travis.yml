@@ -3,7 +3,6 @@ _windows_test: &windows_test
   os: windows
   before_install:
     - choco install php --version $PHP_INSTALL_VERSION --package-parameters='"/InstallDir:C:\php"'
-    - choco install composer
     # Enable required extensions
     - sed -i 's/;extension=openssl/extension=openssl/g' /c/php/php.ini
     - sed -i 's/;extension=sockets/extension=sockets/g' /c/php/php.ini
