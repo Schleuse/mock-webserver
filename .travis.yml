@@ -20,7 +20,7 @@ matrix:
       os: windows
       before_script:
         # Use chocolatey to install certain php version
-        - choco install php --version 7.2 --package-parameters='"/InstallDir:C:\php"'
+        - choco install php --version ^7.2 --package-parameters='"/InstallDir:C:\php"'
         # Export windows path into unix path
         - export PATH=/c/php:$PATH
         - sed -i 's/;extension=openssl/extension=openssl/g' /c/php/php.ini
@@ -36,7 +36,7 @@ matrix:
       os: windows
       before_script:
         # Use chocolatey to install certain php version
-        - choco install php --version 7.3 --package-parameters='"/InstallDir:C:\php"'
+        - choco install php --version 7.3.* --package-parameters='"/InstallDir:C:\php"'
         # Export windows path into unix path
         - export PATH=/c/php:$PATH
         - sed -i 's/;extension=openssl/extension=openssl/g' /c/php/php.ini
