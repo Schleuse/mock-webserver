@@ -9,9 +9,8 @@ _windows_test: &windows_test
     - sed -i 's/;extension=sockets/extension=sockets/g' /c/php/php.ini
     - sed -i 's/;extension=json/extension=json/g' /c/php/php.ini
     - sed -i 's/;extension=curl/extension=curl/g' /c/php/php.ini
-    - php --info
-    - choco install composer --package-parameters='"/DEV:C:\composer /PHP:C:\php"'
-    - export PATH=/c/composer:$PATH
+    - wget http://getcomposer.org/composer.phar
+  install: php composer.phar install
 
 matrix:
   include:
